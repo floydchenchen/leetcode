@@ -86,7 +86,7 @@ class LFUCache:
     # add new node into LFU cache, as well as double linked list
     # condition 1: if LFU cache has input key, update node value and node position in list
     # condition 2: if LFU cache does NOT have input key
-    #  - sub condition 1: if LFU cache does NOT have enough space, remove the Least Recent Used node
+    #  - sub condition 1: if LFU cache does NOT have enough space, remove the Least Frequently Used node
     #  in minimum frequency list, then add new node
     #  - sub condition 2: if LFU cache has enough space, add new node directly
     def put(self, key: int, value: int) -> None:

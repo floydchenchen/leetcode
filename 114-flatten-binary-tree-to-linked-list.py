@@ -112,15 +112,18 @@ class Solution:
         root.left = None
         self.prev = root
 
-    # left -> root -> right去构建
-    def flatten_inorder(self, root):
+    # in place iterative morris traversal
+    # 见ipad笔记
+    def flatten(self, root: TreeNode) -> None:
         if not root:
             return
-        self.prev = root
-        self.flatten_inorder(root.left)
-
-        temp = root.right
-        root.right, root.left = root.left, None
-        self.prev.right = temp
-
-        self.flatten_inorder(temp)
+        node = root
+        while node:
+            if node.left:
+                l_tail = node.left
+                while l_tail.right:
+                    l_tail = l_tail.right
+                l_tail.right = node.right
+                node.right = node.left
+                node.left = None
+            node = node.right

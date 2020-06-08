@@ -13,7 +13,7 @@
 #    / \
 #   9  20
 #     /  \
-#    15   7d
+#    15   7
 # Return true.
 #
 # Example 2:

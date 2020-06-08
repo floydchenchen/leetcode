@@ -45,11 +45,11 @@ class Solution:
                     q.append(node.left)
                 if node.right:
                     q.append(node.right)
-                level_list.append(node.val)
-            if rev:
-                result.append(level_list[::-1])
-            else:
-                result.append(level_list)
+                if rev:
+                    level_list = [node.val] + level_list 
+                else:
+                    level_list.append(node.val)
+            result.append(level_list)
             rev = not rev
 
         return result

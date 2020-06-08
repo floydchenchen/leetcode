@@ -36,10 +36,12 @@ class Solution:
             while stack and A[stack[-1]] > A[r]:
                 cur = stack.pop()
                 result += A[cur] * (cur - stack[-1]) * (r - cur)
+                print("to add", A[cur] * (cur - stack[-1]) * (r - cur))
             stack.append(r)
+            print("stack", stack)
         # Since the answer may be large, return the answer modulo 10^9 + 7.
         # return result % (10**9 + 7)
         return result
 
 sol = Solution()
-print(sol.sumSubarrayMins([3,1,2,4]))
+print(sol.sumSubarrayMins([1,2,3,1,2]))

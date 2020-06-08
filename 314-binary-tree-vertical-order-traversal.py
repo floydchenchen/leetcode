@@ -81,15 +81,16 @@ class TreeNode:
 from collections import defaultdict
 class Solution:
     # BFS, level order traversal with dictionary to store node values at each columns
-    def verticalOrder(self, root):
+    def verticalOrder(self, root: TreeNode) -> List[List[int]]:
         cols = defaultdict(list)
+        if not root:
+            return []
         q = [(root, 0)]
         while q:
             node, i = q.pop(0)
-            if node:
-                cols[i].append(node.val)
-                if node.left:
-                    q.append((node.left, i - 1))
-                if node.right:
-                    q.append((node.right, i + 1))
+            cols[i].append(node.val)
+            if node.left:
+                q.append((node.left, i - 1))
+            if node.right:
+                q.append((node.right, i + 1))
         return [cols[i] for i in sorted(cols)]

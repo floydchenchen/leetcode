@@ -24,6 +24,11 @@
 #  1  3  -1  -3 [5  3  6] 7       5
 #  1  3  -1  -3  5 [3  6  7]      6
 # Therefore, return the median sliding window as [1,-1,-1,3,5,6].
+
+# Two heaps (lo and hi). The size of hi, as measured by the number of valid elements it contains, is either equal to that of lo or one greater than that of lo, depending on the value of k. (This is an invariant we enforce when we add and remove elements from lo and hi). It's worth noting that by "valid" I mean elements within the current window.
+# Lazy removal. I used a defaultdict to_remove to keep track of elements to be removed and their occurrances, and remove them if and only if they are at the top of either heaps.
+# How to add and remove. The logic is extremely straightforward. When adding a new element, we always add to lo. If the element to be removed is in lo as well, great! We don't need to do anything because the heap sizes do not change. However, if the element to be removed happen to be in hi, we then pop an element from lo and add it to hi. Important: that element we pop is guaranteed be a valid element(!!) because otherwise it should have been removed during the previous iteration.
+# Some may be worried that removing elements makes heaps imbalanced. That never happens! No matter how many elements are removed at the end of an iteration, they are invalid elements! The heap lo can contain all the invalid elements and much greater in size than hi, but still in perfect balance with hi. As long as lo and hi each contains half (or (half, half+1) when k is odd) of the elements in the current window, we say that they are balanced.
 from collections import defaultdict
 from heapq import *
 class Solution:

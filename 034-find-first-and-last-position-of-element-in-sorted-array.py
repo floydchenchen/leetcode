@@ -23,7 +23,7 @@ class Solution:
             l, r = 0, len(nums) - 1
             while l <= r:
                 mid = (l + r) // 2
-                if x > nums[mid]:
+                if nums[mid] < x:
                     l = mid + 1
                 else:
                     r = mid - 1
@@ -33,7 +33,7 @@ class Solution:
             l, r = 0, len(nums) - 1
             while l <= r:
                 mid = (l + r) // 2
-                if x >= nums[mid]:
+                if nums[mid] <= x:
                     l = mid + 1
                 else:
                     r = mid - 1

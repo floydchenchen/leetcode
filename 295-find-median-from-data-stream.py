@@ -29,8 +29,8 @@ class MedianFinder:
         initialize your data structure here.
         """
         self.min_heap, self.max_heap = [], []
-        heapify(self.max_heap)
-        heapify(self.min_heap)
+        # heapify(self.max_heap)
+        # heapify(self.min_heap)
 
     def addNum(self, num):
         """

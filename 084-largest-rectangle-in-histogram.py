@@ -7,6 +7,7 @@
 # Input: [2,1,5,6,2,3]
 # Output: 10
 
+
 class Solution:
 	def largestRectangleArea(self, heights):
 		heights.append(0)

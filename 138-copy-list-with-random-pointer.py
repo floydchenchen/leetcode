@@ -6,11 +6,11 @@
 
 
 # Definition for singly-linked list with a random pointer.
-class RandomListNode(object):
-    def __init__(self, x):
-        self.label = x
-        self.next = None
-        self.random = None
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
 
 
 # 这个题主要是需要解决random pointer的问题，在建node的时候，不能同时建好pointer
@@ -18,19 +18,16 @@ class RandomListNode(object):
 # (two pass: one pass for creating dictionary, one pass for assigning pointers)
 # 直接用node来做map的key
 class Solution:
-    def copyRandomList(self, head):
-        """
-        :type head: RandomListNode
-        :rtype: RandomListNode
-        """
+    def copyRandomList(self, head: 'Node') -> 'Node':
         dic = {}
         m = n = head
         # first pass, creating dictionary using node as the key
         while m:
-            dic[m] = RandomListNode(m.label)
+            dic[m] = Node(m.val)
             m = m.next
 
         # second pass, assigning random and next pointers
+        # 一定要写成dic.get来避免null
         while n:
             dic[n].random = dic.get(n.random)
             dic[n].next = dic.get(n.next)

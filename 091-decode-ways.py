@@ -29,6 +29,7 @@ class Solution:
         """
         # XY可以解码的条件是：9 < XY <= 26
         # X可以单独解码的条件是：X != '0'
+        # edge caser
         if not s or s[0] == "0":
             return 0
         n = len(s)
@@ -36,8 +37,8 @@ class Solution:
         dp = [0] * (n + 1)
         # # "" has one way to be decoded
         dp[0] = 1
-        # 0 has 0 way to encode
-        dp[1] = 0 if s[0] == "0" else 1
+        # x has 1 way to encode
+        dp[1] =  1
         for i in range(2, n + 1):
             x = int(s[i-1:i])
             xy = int(s[i-2:i])

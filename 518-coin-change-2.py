@@ -30,14 +30,15 @@ class Solution:
     # dp[i][j]: 对前i个物品，有几种方式恰好能装到容量为j的包
     # initial: dp[i][0] = 1
     # transition: dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]]
-    def change(self, amount: int, coins: List[int]) -> int:
-        n = len(coins)
-        dp = [([1] + [0] * amount) for _ in range(n + 1)]
-        for i in range(1, n+1):
-            for j in range(1, amount+1):
-                if j - coins[i-1] < 0:
-                    dp[i][j] = dp[i-1][j]
-                else:
-                    dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]]
-        return dp[n][amount]
+def change(self, amount: int, coins: List[int]) -> int:
+    n = len(coins)
+    dp = [([1] + [0] * amount) for _ in range(n + 1)]
+    for i in range(1, n+1):
+        for j in range(1, amount+1):
+            # 容量不足
+            if j - coins[i-1] < 0:
+                dp[i][j] = dp[i-1][j]
+            else:
+                dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]]
+    return dp[n][amount]
 

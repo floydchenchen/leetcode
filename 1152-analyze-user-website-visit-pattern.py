@@ -37,23 +37,52 @@ from typing import List
 from collections import defaultdict, Counter
 from itertools import combinations
 class Solution:
+
+
     def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
-        user_patterns = defaultdict(list)
+
+        def combination(websites: List[str], result: List[tuple], temp: List[str], start: int):
+            # exit 
+            if len(temp) == 3:
+                # skip duplicate
+                if tuple(temp) not in result:
+                    result.append(tuple(temp))
+            else:
+                for i in range(start, len(websites)):
+                    # skip duplicates
+                    # if 
+                    temp.append(websites[i])
+                    combination(websites, result, temp, i + 1)
+                    temp.pop()
+
+        user_websites = defaultdict(list)
         for t, u, w in sorted(zip(timestamp, username, website)):
-            user_patterns[u].append(w)
-        print(user_patterns)
-        counter = Counter()
-        for x in user_patterns.values():
-            print("set(combinations(x, 3))", set(combinations(x, 3)))
-            counter += Counter(set(combinations(x, 3)))
-        print(counter)
-        return min(counter, key=lambda k: (-counter[k], k))
+            user_websites[u].append(w)
+        print("user_websites", user_websites)
+        patterns_map = defaultdict(int)
+        for websites in user_websites.values():
+            print("websites", websites)
+            patterns = []
+            combination(websites, patterns, [], 0)
+            print("patterns", patterns)
+            for pattern in patterns:
+                patterns_map[pattern] += 1
+        print("patterns_map", patterns_map)
+        return min(patterns_map, key= lambda k: (-patterns_map[k], k))
 
 sol = Solution()
-username = ["u1","u1","u1","u2","u2","u2"]
-timestamp = [1,2,3,4,5,6]
-websites = ["a","b","c","a","b","a"]
+# username = ["u1","u1","u1","u2","u2","u2"]
+# timestamp = [1,2,3,4,5,6]
+# websites = ["a","b","c","a","b","a"]
 # username = ["ed","kgckntxmqd","iunjfam","iunjfam","iunjfam","ed","kgckntxmqd","hmlnzerzg"]
 # timestamp = [544382452,777341379,844327903,116460449,394864737,48322095,742628675,791673656]
 # websites = ["lrlxnhyeyq","za","p","oedqw","qewze","xihrl","xsk","qewze"]
+# username = ["joe","joe","joe","james","james","james","james","mary","mary","mary"]
+# timestamp = [1,2,3,4,5,6,7,8,9,10]
+# websites = ["home","about","career","home","cart","maps","home","home","about","career"]
+# Output: ["home","about","career"]
+
+username = ["h","eiy","cq","h","cq","txldsscx","cq","txldsscx","h","cq","cq"]
+timestamp = [527896567,334462937,517687281,134127993,859112386,159548699,51100299,444082139,926837079,317455832,411747930]
+websites = ["hibympufi","hibympufi","hibympufi","hibympufi","hibympufi","hibympufi","hibympufi","hibympufi","yljmntrclw","hibympufi","yljmntrclw"]
 print(sol.mostVisitedPattern(username, timestamp, websites))

@@ -14,34 +14,21 @@
 # Explanation: The longest valid parentheses substring is "()()"
 
 class Solution:
-
-    # stack中存的数字：每个"("组成多少个"()"，
-    # 例如"()(()"，stack的变化：
-    # [0]
-    # [0, 0]
-    # [2]
-    # [2, 0]
-    # [4]
-    # [0]   
-    # 所以最大是2
-    def longestValidParentheses(self, s):
-        stack = [0]
-        result = 0
-        for c in s:
-            # stack中存的是，当前valid的这个substring，有多少个valid括号组合
-            if c == "(":
-                stack.append(0)
+    def longestValidParentheses(self, s: str) -> int:
+        max_len = 0
+        # stack中记录valid parentheses的左边界
+        # 为了应对")(())"即一开始就出现右括号的情况，对stack进行预处理
+        stack = [-1]
+        for i in range(len(s)):
+            if s[i] == "(":
+                stack.append(i)
             else:
-                # skip the leading ")"
-                if len(stack) > 1:
-                    val = stack.pop()
-                    stack[-1] += val + 2
-                    result = max(result, stack[-1])
+                stack.pop()
+                if not stack:
+                    stack.append(i)
                 else:
-                    # 清零
-                    stack = [0]
-            print(stack)
-        return result
+                    max_len = max(max_len, i - stack[-1])
+        return max_len            
 
 # print(Solution().longestValidParentheses("()(()"))
 print(Solution().longestValidParentheses(")()())"))

@@ -22,22 +22,21 @@ class TreeNode:
         self.right = None
 
 class Solution:
-    def diameterOfBinaryTree(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        self._max = 0
-        def max_depth(root):
-            if not root:
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        self.diameter = 0
+        
+        def max_depth(node: TreeNode) -> int:
+            if not node:
                 return 0
-            left, right = max_depth(root.left), max_depth(root.right)
-            # global variable
-            self._max = max(self._max, left + right)
+            # divide
+            left, right = max_depth(node.left), max_depth(node.right)
+            # update global
+            self.diameter = max(self.diameter, left + right)
+            # conquer
             return 1 + max(left, right)
-
+        
         max_depth(root)
-        return self._max
+        return self.diameter
 
 root = TreeNode(1)
 root.left = TreeNode(2)

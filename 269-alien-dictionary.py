@@ -103,37 +103,29 @@ from typing import List
 class Solution:
     def alienOrder(self, words: List[str]) -> str:
         # 分别储存这个node的parents和children
-        children, parents = {}, {}
-        for word in words:
-            for char in word:
-                children[char] = set()
-                parents[char] = set()
-
+        children, parents = defaultdict(set), defaultdict(set)
+        
         for word1, word2 in zip(words[:-1], words[1:]):
             # judge if word1 and word2 are valid
             # for example word1='abc' and word2='ab' then we cannot get a valid result
             if len(word1) > len(word2) and word1[:len(word2)] == word2:
                 return ""
-
-            # extract the relation
             for char1, char2 in zip(word1, word2):
                 if char1 != char2:
                     # char1 is the parent of char2, and char2 is the child of char1
                     children[char1].add(char2)
                     parents[char2].add(char1)
+                    # 一定要break，因为后面的顺序就说不准了
                     break
-        print("children", children)
-        print("parents", parents)
-
+            
         # topological sort
-        result, q = [], []
-        # 因为我们要随时删除parents[node]，这样才会不影响for loop
-        no_parents_list = [char for char in parents if len(parents[char]) == 0]
-        print("no_parents_list", no_parents_list)
-        for char in no_parents_list:
-            del parents[char]
-            q.append(char)
-        print("q", q)
+        result, q, q_set = [], [], set()
+        for word in words:
+            for char in word:
+                # we could see a char multiple times
+                if char not in parents and char not in q_set:
+                    q.append(char)
+                    q_set.add(char)
 
         while q:
             char = q.pop(0)

@@ -35,13 +35,16 @@
 #
 # Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
 
-# 思路：用dictionary: {word, set(parents)}来表示整个path，最后通过parents来build the result list
+# 思路：用dictionary: {word, set(parents)}来表示整个path，最后通过parents来build the result list，因为生成的图形毕竟不是一个tree，而是一个graph
+# 用level来存当前level有哪些word，来避免重复（例如example 1中level 3有dog和log，如果不记录level的话，log也可以是dog的下一个word，而这样不对。）
 from collections import defaultdict
 class Solution:
     def findLadders(self, beginWord, endWord, wordList):
         word_set = set(wordList)
-        level = set([beginWord]) # 这个level有哪些node
+        level = defaultdict(set) # 这个level有哪些node
+        level[beginWord] = set()
         parents = defaultdict(set)
+        # build graph
         while level and endWord not in parents:
             next_level = defaultdict(set)
             for word in level:
@@ -50,19 +53,41 @@ class Solution:
                         n = word[:i] + char + word[i + 1:]
                         if n in word_set and n not in parents:
                             next_level[n].add(word)
-                            # print("next_level", next_level)
+                            print("next_level", next_level)
             level = next_level
             # print("updated level", level)
             # The update() adds elements from a set (passed as an argument) to the set (calling the update() method)
             parents.update(next_level)
-            # print("updated parents", parents)
-            # print()
-        result = [[endWord]]
+        print("parents", parents)
+        
+        q = []
+        if endWord not in parents:
+            return q
+        # # BFS build the list
+        # q.append([endWord])
+        # cur_level = 1
+        # while q and q[0][0] != beginWord:
+        #     while len(q[0]) == cur_level:
+        #         words = q.pop(0)
+        #         for par in parents[words[0]]:
+        #             q.append([par] + words)
+        #     cur_level += 1
+        # return q
 
-        # BFS build the list
-        while result and result[0][0] != beginWord:
-            result = [[word] + path for path in result for word in parents[path[0]]]
-            print(result)
+        # backtrack build result
+        def backtrack(result, temp, word):
+            # exit
+            if word == beginWord:
+                result.append(list(temp))
+            else:
+                for parent in parents[word]:
+                    temp.insert(0, parent)
+                    backtrack(result, temp, parent)
+                    temp.pop(0)
+        
+        result = []
+        backtrack(result, [endWord], endWord)
         return result
+            
 
 print(Solution().findLadders("hit","cog",["hot","dot","dog","lot","log","cog"]))

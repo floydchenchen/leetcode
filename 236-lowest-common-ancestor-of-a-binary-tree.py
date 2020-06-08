@@ -54,3 +54,30 @@ class Solution:
         if left and right:
             return root
         return left or right
+
+
+    ### With parent pointer
+    # find the height h(a), h(b)
+    # move the lower node b up by h(a)-h(b) steps
+    # move a and b up together until a=b
+    
+    # LCA with parent pointer
+    def lca_parent(root, node_a, node_b):
+        h_a = find_height(root, node_a)
+        h_b = find_height(root, node_b)
+        if h_b > h_a:
+            node_a, node_b = node_b, node_a
+            h_a,h_b = h_b,h_a
+        for _ in range(h_b - h_a):
+            node_b = node_b.parent
+        while node_a != node_b:
+            node_a = node_a.parent
+            node_b = node_b.parent
+        return node_a
+
+    def find_height(root, node):
+        h = 0
+        while node:
+            node = node.parent
+            h += 1
+        return h

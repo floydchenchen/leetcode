@@ -61,7 +61,7 @@ class LRUCache:
 
 	# 每次put，都先判断是否超过容量，如果是的话从dic和list中移除头部node，再将新node插入尾部
 	def put(self, key: int, value: int) -> None:
-		# if key already in dic, and return
+		# if key already in dic, modify and return
 		if self.get(key) != -1:
 			self.dic[key].value = value
 			return

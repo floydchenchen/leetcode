@@ -25,8 +25,8 @@ class Solution:
 		ones, twos = 0, 0
 		# 思路利用x ^ 0s = x 和 x ^ x = 0
         # 利用state machine的思想，当一个数出现3次的时候，将它变成SO:   
-        # SO: 00  ->  S1: 10  -> s2: 01  -> s3/s0: 00
-        # 00->10->01->00(0->1->2->3/0
+        # SO: 00  ->  S1: 01  -> s2: 10  -> s3/s0: 00
+        # 00->01->10,.m->00(0->1->2->3/0
         # 用ones和twos储存每次变化的时候，每个bit的state结果（分别代表第一位与第二位）
         # For 'ones', we can get 'ones = ones ^ A[i]; if (twos == 1) then ones = 0', that can be tansformed to 'ones = (ones ^ A[i]) & ~twos'.
         # Similarly, for 'twos', we can get 'twos = twos ^ A[i]; if (ones* == 1) then twos = 0' and 'twos = (twos ^ A[i]) & ~ones'

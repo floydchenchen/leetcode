@@ -24,8 +24,8 @@
 
 class Solution:
     # dp solution
-    # dp[i]: word[:i+1]是否能被wordDict segmented
-    # transition: dp[i] = (dp[i-len(word)] or i-len(w)+1 == 0 ) and s[i-len(word)+1:j+1] in wordDict
+    # dp[i]: word[:i]是否能被wordDict segmented
+    # transition: dp[i] = dp[i-len(word)] and s[i-len(word):i] in wordDict
     # s[i:j]不需要考虑越界问题
     def wordBreak(self, s, wordDict):
         """
@@ -33,11 +33,11 @@ class Solution:
         :type wordDict: List[str]
         :rtype: bool
         """
-        dp = [False] * len(s)
-        for i in range(len(s)):
+        dp = [True] + [False] * len(s)
+        for i in range(1, len(s)+1):
             for word in wordDict:
                 # transition function
-                if word == s[i-len(word)+1:i+1] and (i - len(word) + 1 == 0 or dp[i-len(word)]):
+                if word == s[i-len(word):i] and dp[i-len(word)]:
                     dp[i] = True
                     break
         return dp[-1]

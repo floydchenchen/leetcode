@@ -87,3 +87,31 @@ class Solution:
         self.prev = root
         # -> right
         self.inorder_traversal(root.right)
+
+    
+    # iterative solution
+    def recoverTree1(self, root: TreeNode):
+        """
+        :rtype: void Do not return anything, modify root in-place instead.
+        """
+        stack = []
+        x = y = prev = None
+        
+        while stack or root:
+            # left 
+            while root:
+                stack.append(root)
+                root = root.left
+            # root
+            root = stack.pop()
+            if prev and root.val < prev.val:
+                y = root
+                if x is None:
+                    x = prev 
+                else:
+                    break
+            prev = root
+            # right
+            root = root.right
+
+        x.val, y.val = y.val, x.val

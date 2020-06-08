@@ -27,9 +27,11 @@
 # Note that (for example) S.next(75) returned 4, because the last 4 prices
 # (including today's price of 75) were less than or equal to today's price.
 
+# 本题其实是找next greater element出现前，当前greatest element持续了多久
 class StockSpanner:
 
     def __init__(self):
+        # stack中存当前[stock_price, lasting_days]
         self.stack = []
 
     def next(self, price):
@@ -38,6 +40,7 @@ class StockSpanner:
         :rtype: int
         """
         result = 1
+        # 单调递减栈
         while self.stack and self.stack[-1][0] <= price:
             result += self.stack.pop()[1]
         self.stack.append([price, result])

@@ -28,5 +28,5 @@ class Solution:
 		return result
 
 sol = Solution()
-print(sol.missingNumber([0,1,2,4]))
+print(sol.missingNumber([3,0,1]))
 

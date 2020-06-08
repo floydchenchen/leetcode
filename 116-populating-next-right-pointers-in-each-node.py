@@ -79,17 +79,17 @@ class Solution:
             while cur:
                 # 这里因为down_ptr和right_ptr最开始是一个node，所以这样让down_ptr指向了parent的下一层最左边的node
                 if cur.left:
-                    right_ptr.next = cur.left
                     if not down_ptr_found:
                         down_ptr.next = cur.left
                         down_ptr_found = True
-                    right_ptr = cur.left
+                    right_ptr.next = cur.left
+                    right_ptr = right_ptr.next
                 if cur.right:
-                    right_ptr.next = cur.right
                     if not down_ptr_found:
                         down_ptr.next = cur.right
                         down_ptr_found = True
-                    right_ptr = cur.right
+                    right_ptr.next = cur.right
+                    right_ptr = right_ptr.next
                 cur = cur.next
             cur = down_ptr.next
         return root

@@ -31,6 +31,7 @@ class Solution:
 
         for i in range(m):
             for j in range(n):
+                # 考虑边界情况
                 if not i and not j:
                     continue
                 elif not i and j:

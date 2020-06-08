@@ -38,7 +38,7 @@ class Solution:
         result = []
         inorder_recursive(root, result)
         return result
-
+ 
     # iterative inorder traversal: stack
     def inorderTraversal1(self, root):
         result, stack = [], []
